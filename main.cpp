@@ -1,59 +1,71 @@
-// This program prints the C++ language standard your compiler is currently using
-// Freely redistributable, courtesy of learncpp.com (https://www.learncpp.com/cpp-tutorial/what-language-standard-is-my-compiler-using/)
-
 #include <iostream>
-
-const int numStandards = 7;
-// The C++26 stdCode is a placeholder since the exact code won't be determined until the standard is finalized
-const long stdCode[numStandards] = { 199711L, 201103L, 201402L, 201703L, 202002L, 202302L, 202612L};
-const char* stdName[numStandards] = { "Pre-C++11", "C++11", "C++14", "C++17", "C++20", "C++23", "C++26" };
-
-long getCPPStandard()
-{
-    // Visual Studio is non-conforming in support for __cplusplus (unless you set a specific compiler flag, which you probably haven't)
-    // In Visual Studio 2015 or newer we can use _MSVC_LANG instead
-    // See https://devblogs.microsoft.com/cppblog/msvc-now-correctly-reports-__cplusplus/
-#if defined (_MSVC_LANG)
-    return _MSVC_LANG;
-#elif defined (_MSC_VER)
-    // If we're using an older version of Visual Studio, bail out
-    return -1;
-#else
-    // __cplusplus is the intended way to query the language standard code (as defined by the language standards)
-    return __cplusplus;
-#endif
-}
 
 int main()
 {
-    long standard = getCPPStandard();
+    std::string text { "Hello World!" }; // direct-list-initilization
+    std::cout << text << std::endl;
 
-    if (standard == -1)
-    {
-        std::cout << "Error: Unable to determine your language standard.  Sorry.\n";
-        return 0;
-    }
+    [[maybe_unused]] int a;     // default-initialization (no initializer) with [[maybe_unused]] attribute c++17
 
-    for (int i = 0; i < numStandards; ++i)
-    {
-        // If the reported version is one of the finalized standard codes
-        // then we know exactly what version the compiler is running
-        if (standard == stdCode[i])
-        {
-            std::cout << "Your compiler is using " << stdName[i]
-                << " (language standard code " << standard << "L)\n";
-            break;
-        }
+    //std::cout << "Variable a value = " + a << std::endl; //error: local variable not initialized
 
-        // If the reported version is between two finalized standard codes,
-        // this must be a preview / experimental support for the next upcoming version.
-        if (standard < stdCode[i])
-        {
-            std::cout << "Your compiler is using a preview/pre-release of " << stdName[i]
-                << " (language standard code " << standard << "L)\n";
-            break;
-        }
-    }
+    // Variable Assignment
+
+    a = 5; // copy assignment of value 5 into variable width
+    std::cout << a ; 
+    a = 7; // change value stored in variable width to 7
+    std::cout << a ;
+
+    // Variable initialization
+    int width {5};       // define variable width and initialize with initial value 5
+    std::cout << width; // prints 5
+
+    // Different forms of initialization
+
+    // Traditional initialization forms:
+    int b = 5;     // copy-initialization (initial value after equals sign)
+    std::cout << "Variable b value: " << b << std::endl;
+    int c ( 6 );   // direct-initialization (initial value in parenthesis)
+    std::cout << "Variable c value: " << c << std::endl;
+
+    // Modern initialization forms (preferred):
+    int d { 7 };   // direct-list-initialization (initial value in braces)
+    std::cout << "Variable d value: " << d << std::endl;
+    int e {};      // value-initialization (empty braces)
+    std::cout << "Variable e value: " << e << std::endl;
+
+    // List-initialization disallows narrowing conversions
+
+    // An integer can only hold non-fractional values.
+    // Initializing an int with fractional value 4.5 requires the compiler to convert 4.5 to a value an int can hold.
+    // Such a conversion is a narrowing conversion, since the fractional part of the value will be lost.
+
+    //int w1 { 4.5 }; //compile error: list-init does not allow narrowing conversion
+
+    //int w2 = 4.5;   // compiles: w2 copy-initialized to value 4, gives error of narrowing conversion
+    //std::cout << "Variable w2 value: " + w2 << std::endl;
+    //int w3 (4.5);   // compiles: w3 direct-initialized to value 4, gives error of narrowing conversion
+    //std::cout << "Variable w3 value: " + w3 << std::endl;
+    
+    // Initializing multiple variables
+
+    int a2 = 5, b2 = 6;          // copy-initialization
+    int c2 ( 7 ), d2 ( 8 );      // direct-initialization
+    int e2 { 9 }, f { 10 };     // direct-list-initialization
+    int i {}, j {};            // value-initialization
+
+    std::cout << a2 << b2 << c2 << d2 << e2 << f << i << j << std::endl;
+
+    // The [[maybe_unused]] attribute C++17
+
+    [[maybe_unused]] double pi { 3.14159 };  // Don't complain if pi is unused
+    [[maybe_unused]] double gravity { 9.8 }; // Don't complain if gravity is unused
+    [[maybe_unused]] double phi { 1.61803 }; // Don't complain if phi is unused
+
+    std::cout << pi << '\n';
+    std::cout << phi << '\n';
+
+    // The compiler will no longer warn about gravity not being used
 
     return 0;
 }
