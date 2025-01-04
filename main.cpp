@@ -1,18 +1,25 @@
 #include <iostream>
 
-void doNothing(int&) // Don't worry about what & is for now, we're just using it to trick the compiler into thinking variable x is used
-{
-}
+int my_function_name(){return 0;} // conventional (separated by underscores/snake_case)
+int myFunctionName(){return 0;}  // conventional (intercapped/camelCase)
+int MyFunctionName(){return 0;}   // unconventional (should start with lower case letter)
 
 int main()
 {
-    // define an integer variable named x
-    int x; // this variable is uninitialized
+    [[maybe_unused]]int value; // conventional
+    
+    [[maybe_unused]]int Value; // unconventional (should start with lower case letter)
+    [[maybe_unused]]int VALUE; // unconventional (should start with lower case letter and be in all lower case)
+    [[maybe_unused]]int VaLuE; // unconventional (see your psychiatrist) ;)
 
-    doNothing(x); // make the compiler think we're assigning a value to this variable
+    [[maybe_unused]]int my_variable_name;   // conventional (separated by underscores/snake_case)
 
-    // print the value of x to the screen (who knows what we'll get, because x is uninitialized)
-    std::cout << x << '\n';
+    [[maybe_unused]]int myVariableName;     // conventional (intercapped/camelCase)
+
+    //int my variable name;   // invalid (whitespace not allowed)
+    //int my function name(); // invalid (whitespace not allowed)
+
+    [[maybe_unused]]int MyVariableName;     // unconventional (should start with lower case letter)
 
     return 0;
 }
