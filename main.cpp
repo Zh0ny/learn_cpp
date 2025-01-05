@@ -1,25 +1,34 @@
 #include <iostream>
 
-int my_function_name(){return 0;} // conventional (separated by underscores/snake_case)
-int myFunctionName(){return 0;}  // conventional (intercapped/camelCase)
-int MyFunctionName(){return 0;}   // unconventional (should start with lower case letter)
-
 int main()
 {
-    [[maybe_unused]]int value; // conventional
-    
-    [[maybe_unused]]int Value; // unconventional (should start with lower case letter)
-    [[maybe_unused]]int VALUE; // unconventional (should start with lower case letter and be in all lower case)
-    [[maybe_unused]]int VaLuE; // unconventional (see your psychiatrist) ;)
+    // Some language elements must be whitespace-separated
 
-    [[maybe_unused]]int my_variable_name;   // conventional (separated by underscores/snake_case)
+    int x;
+    int                y;
+                int
+    z;
 
-    [[maybe_unused]]int myVariableName;     // conventional (intercapped/camelCase)
+    // Quoted text takes the amount of whitespace literally
 
-    //int my variable name;   // invalid (whitespace not allowed)
-    //int my function name(); // invalid (whitespace not allowed)
+    std::cout << "Hello world!";
+    std::cout << "Hello          world!";
 
-    [[maybe_unused]]int MyVariableName;     // unconventional (should start with lower case letter)
+    //std::cout << "Hello
+    // world!"; // Not allowed!
+
+    std::cout << "Hello "
+     "world!"; // prints "Hello world!"
+
+    // Basic formatting
+
+    std::cout << "This is a really, really, really, really, really, really, really, "
+        "really long line\n"; // one extra indentation for continuation line
+
+    std::cout << "This is another really, really, really, really, really, really, really, "
+                 "really long line\n"; // text aligned with the previous line for continuation line
+
+    std::cout << "This one is short\n";
 
     return 0;
 }
